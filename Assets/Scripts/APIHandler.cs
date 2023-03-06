@@ -11,6 +11,7 @@ namespace DungeonGeneration
     public class APIHandler : MonoBehaviour
     {
         [SerializeField] private MapsUIPlotter plot;
+        [SerializeField] private LevelBuilder levelBuilder;
 
         // Start is called before the first frame update
         void Start()
@@ -46,25 +47,19 @@ namespace DungeonGeneration
                 var response = JSON.Parse(request.downloadHandler.text);
                 Debug.Log($"{response} |");
                 List<List<List<int>>> dungeonRes = JsonConvert.DeserializeObject<List<List<List<int>>>>(response["data"]);
-                DungeonResponse generatedDungeons = new DungeonResponse(dungeonRes);
-                Debug.Log($"{generatedDungeons.dungeonGrid.Count} | {generatedDungeons.dungeonGrid[0].Count} | {generatedDungeons.dungeonGrid[0][0].Count}");
-                plot.PlotHeatmap(generatedDungeons.dungeonGrid[0]);
+                DungeonGrid generatedDungeons = new DungeonGrid(dungeonRes);
+                Debug.Log($"{generatedDungeons.gridList.Count} | {generatedDungeons.gridList[0].Count} | {generatedDungeons.gridList[0][0].Count}");
+                plot.PlotHeatmap(generatedDungeons.gridList[0]);
+                levelBuilder.GenerateDungeon(generatedDungeons);
+
+                //Delete the unwanted variables
+                dungeonRes = null;
+                response = null;
             }
             else
             {
                 Debug.Log("Error: " + request.error);
             }
-        }
-    }
-
-    [Serializable]
-    public class DungeonResponse
-    {
-        public List<List<List<int>>> dungeonGrid;
-
-        public DungeonResponse(List<List<List<int>>> _dungeonGrid)
-        {
-            dungeonGrid = _dungeonGrid;
         }
     }
 }
