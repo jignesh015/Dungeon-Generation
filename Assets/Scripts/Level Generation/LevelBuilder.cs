@@ -94,9 +94,6 @@ namespace DungeonGeneration
 
         private IEnumerator GenerateRoomsAsync(RoomsGrid grid)
         {
-            if (generatedDungeon == null || dungeonFloors == null || dungeonFloors.Count == 0)
-                yield break;
-
             //Delete previously created rooms
             if(roomObjects != null && roomObjects.Count > 0)
             {
@@ -106,6 +103,9 @@ namespace DungeonGeneration
                 }
                 yield return null;
             }
+
+            if (generatedDungeon == null || dungeonFloors == null || dungeonFloors.Count == 0)
+                yield break;
 
             //Select a respective Dungeon room
             GameObject _currentDungeonFloor = dungeonFloors[0];

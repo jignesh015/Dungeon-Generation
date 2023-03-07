@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace DungeonGeneration
 {
@@ -9,6 +11,11 @@ namespace DungeonGeneration
         [Header("SCREENS")]
         [SerializeField] private GameObject networkErrorScreen;
         [SerializeField] private GameObject configScreen;
+
+        [Header("CONFIG SETTINGS")]
+        [SerializeField] private TMP_Dropdown dungeonDatasetChoiceInput;
+        [SerializeField] private TMP_Dropdown roomDatasetChoiceInput;
+        [SerializeField] private Toggle performSanityCheckInput;
 
         private GameManager gameManager;
 
@@ -32,7 +39,18 @@ namespace DungeonGeneration
 
         public void OnGenerateButtonClick()
         {
+            SetConfigToSettings();
             gameManager.apiHandler.GenerateEntireMap(gameManager.activeSettings);
+        }
+
+        private void SetConfigToSettings()
+        {
+            gameManager.activeSettings.settingsName = "New Setting";
+            gameManager.activeSettings.numberOfDungeons = 1;
+            gameManager.activeSettings.numberOfRooms = 1;
+            gameManager.activeSettings.dungeonDatasetChoice = dungeonDatasetChoiceInput.value;
+            gameManager.activeSettings.roomDatasetChoice = roomDatasetChoiceInput.value;
+            gameManager.activeSettings.performSanityCheck = performSanityCheckInput.isOn;
         }
     }
 }
