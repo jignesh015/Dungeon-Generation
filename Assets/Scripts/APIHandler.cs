@@ -88,7 +88,7 @@ namespace DungeonGeneration
                 RoomsGrid generatedRooms = new RoomsGrid(roomsRes);
                 Debug.Log($"{generatedRooms.gridList.Count} | {generatedRooms.gridList[0].Count} | {generatedRooms.gridList[0][0].Count}");
                 plot.PlotRoomHeatmap(generatedRooms.gridList[0]);
-                //levelBuilder.GenerateDungeon(generatedDungeons);
+                levelBuilder.GenerateRooms(generatedRooms);
 
                 //Delete the unwanted variables
                 roomsRes = null;
