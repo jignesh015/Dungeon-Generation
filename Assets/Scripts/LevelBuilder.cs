@@ -50,7 +50,6 @@ namespace DungeonGeneration
                     int index = i * size + j;
                     //Debug.Log($"<color=cyan>| i : {i} | j : {j} | index : {index} | Val : {gridValues[i][j]} | </color>");
                     dungeonFloors[index].SetActive(gridValues[i][j] == 1);
-                    yield return new WaitForSeconds(buildDelay);
                 }
             }
             gridValues = null;

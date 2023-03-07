@@ -9,7 +9,14 @@ namespace DungeonGeneration
 {
     public class MapsUIPlotter : MonoBehaviour
     {
-        [SerializeField] private MapGrid mapGrid;
+
+        [Header("MAP GRIDS")]
+        [SerializeField] private MapGrid dungeonGrid;
+        [SerializeField] private MapGrid roomGrid;
+
+        [Header("COLOR SCHEMES")]
+        [SerializeField] private List<Color> dungeonColors;
+        [SerializeField] private List<Color> roomColors;
 
         // Start is called before the first frame update
         void Start()
@@ -23,9 +30,14 @@ namespace DungeonGeneration
 
         }
 
-        public void PlotHeatmap(List<List<int>> gridValues)
+        public void PlotDungeonHeatmap(List<List<int>> gridValues)
         {
-            mapGrid.SetGridColor(gridValues);
+            dungeonGrid.SetGridColor(gridValues,dungeonColors);
+        }
+
+        public void PlotRoomHeatmap(List<List<int>> gridValues)
+        {
+            roomGrid.SetGridColor(gridValues, roomColors);
         }
 
     }
@@ -40,7 +52,7 @@ namespace DungeonGeneration
         /// </summary>
         /// <param name="gridValues"></param>
         /// <param name="isBinary"></param>
-        public void SetGridColor(List<List<int>> gridValues, bool isBinary = true)
+        public void SetGridColor(List<List<int>> gridValues, List<Color> colors, bool isBinary = true)
         {
             if (isBinary)
             {
@@ -50,8 +62,9 @@ namespace DungeonGeneration
                     for (int j = 0; j < size; j++)
                     {
                         int index = i * size + j;
-                        //Debug.Log($"<color=cyan>| i : {i} | j : {j} | index : {index} | Val : {gridValues[i][j]} | </color>");
-                        mapGrid[index].color = gridValues[i][j] == 0 ? Color.black : Color.white;
+                        //Debug.Log($"<color=cyan>| i : {i} | j : {j} | index : {index} " +
+                        //    $"| Val : {gridValues[i][j]} | Colors {colors.Count} | </color>");
+                        mapGrid[index].color = colors[gridValues[i][j]];
                     }
                 }
             }

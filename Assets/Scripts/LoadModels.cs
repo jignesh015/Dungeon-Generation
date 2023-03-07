@@ -54,7 +54,7 @@ namespace DungeonGeneration
 
             Tensor outputTensor = dungeonAutoencoderWorker.PeekOutput(dungeonAutoencoderLayerName);
             var outputList = Utils.TensorToList(outputTensor);
-            plot.PlotHeatmap(outputList[0]);
+            plot.PlotDungeonHeatmap(outputList[0]);
             //Debug.Log($"<color=cyan>{outputTensor.ShallowCopy().shape} | {outputTensor.GetTensorDataStatistics()} | {outputTensor.ToReadOnlyArray().Length}</color>");
         }
 
