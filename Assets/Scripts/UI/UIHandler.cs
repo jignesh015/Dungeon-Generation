@@ -17,18 +17,26 @@ namespace DungeonGeneration
         [SerializeField] private TMP_Dropdown roomDatasetChoiceInput;
         [SerializeField] private Toggle performSanityCheckInput;
 
+        [Header("CURSOR SETTINGS")]
+        [SerializeField] private Texture2D cursorTexture;
+        [SerializeField] private CursorMode cursorMode = CursorMode.Auto;
+        [SerializeField] private Vector2 hotSpot = Vector2.zero;
+
         private GameManager gameManager;
 
         // Start is called before the first frame update
         void Start()
         {
             gameManager = GameManager.Instance;
+            Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+            // Releases the cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         public void ToggleNetworkErrorScreen(bool state)

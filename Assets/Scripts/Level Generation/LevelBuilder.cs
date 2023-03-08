@@ -83,6 +83,9 @@ namespace DungeonGeneration
                     dungeonFloors[index].SetActive(gridValues[i][j] == 1);
                 }
             }
+
+            //Remove inactive floors
+            dungeonFloors = dungeonFloors.Where(obj => obj.activeSelf).ToList();
         }
         #endregion
 
@@ -107,49 +110,63 @@ namespace DungeonGeneration
             if (generatedDungeon == null || dungeonFloors == null || dungeonFloors.Count == 0)
                 yield break;
 
-            //Select a respective Dungeon room
-            GameObject _currentDungeonFloor = dungeonFloors[0];
-            roomObjects = new List<GameObject>();
-
-            //Perform a sanity check on the generated room data
-            List<List<int>> gridValues = gameManager.activeSettings.performSanityCheck ? RoomSanityCheck(grid.gridList[0]) : grid.gridList[0];
-
-            //Instatiate objects in the selected room
-            int size = gridValues.Count;
-            for (int i = 0; i < size; i++)
+            //Make sure that number of dungeon rooms are equal to room data generated
+            if (dungeonFloors.Count != grid.gridList.Count)
             {
-                for (int j = 0; j < size; j++)
+                Debug.LogFormat($"<color=magenta>Mismatch in level gen!" +
+                    $"Dungeon Room : {dungeonFloors.Count}|Rooms generated : {grid.gridList.Count}</color>");
+                yield break;
+            }
+
+            //Select a respective Dungeon room
+            for(int _index = 0; _index < grid.gridList.Count; _index++)
+            {
+                GameObject _currentDungeonFloor = dungeonFloors[_index];
+                roomObjects = new List<GameObject>();
+
+                //Perform a sanity check on the generated room data
+                List<List<int>> gridValues = gameManager.activeSettings.performSanityCheck ? RoomSanityCheck(grid.gridList[_index]) : grid.gridList[_index];
+
+                //Instatiate objects in the selected room
+                int size = gridValues.Count;
+                for (int i = 0; i < size; i++)
                 {
-                    int cellValue = gridValues[i][j];
-                    Vector3 parentPos = _currentDungeonFloor.transform.position;
-                    Vector3 cellPosition = new Vector3(roomXPosStart + i * roomXPosOffset + parentPos.x,
-                        0, roomZPosStart + j * roomZPosOffset + parentPos.z);
-
-                    //Instantiate a room prefab as per cell value
-                    if(cellValue != 0)
+                    for (int j = 0; j < size; j++)
                     {
-                        GameObject _roomObj = Instantiate(roomPrefabs[cellValue], _currentDungeonFloor.transform);
-                        
-                        //Set object position
-                        _roomObj.transform.position = new Vector3(cellPosition.x,
-                            _roomObj.transform.position.y, cellPosition.z);
+                        int cellValue = gridValues[i][j];
+                        Vector3 parentPos = _currentDungeonFloor.transform.position;
+                        Vector3 cellPosition = new Vector3(roomXPosStart + i * roomXPosOffset + parentPos.x,
+                            0, roomZPosStart + j * roomZPosOffset + parentPos.z);
 
-                        //Set object rotation
-                        float yRot = 0;
-                        if(cellValue == 7)
+                        //Instantiate a room prefab as per cell value
+                        if (cellValue != 0)
                         {
-                            yRot = j == 0 ? 0 : j == size - 1 ? 180 : i == 0 ? 270 : i == size-1 ? 90 : 0;
+                            GameObject _roomObj = Instantiate(roomPrefabs[cellValue], _currentDungeonFloor.transform);
+
+                            //Set object position
+                            _roomObj.transform.position = new Vector3(cellPosition.x,
+                                _roomObj.transform.position.y, cellPosition.z);
+
+                            //Set object rotation
+                            float yRot = 0;
+                            if (cellValue == 7)
+                            {
+                                yRot = j == 0 ? 0 : j == size - 1 ? 180 : i == 0 ? 270 : i == size - 1 ? 90 : 0;
+                            }
+                            else if (cellValue == 4 || cellValue == 5 || cellValue == 6 || cellValue == 8)
+                            {
+                                yRot = j == 1 ? 0 : j == size - 2 ? 180 : i == 1 ? 270 : i == size - 2 ? 90 : 0;
+                            }
+                            _roomObj.transform.rotation = Quaternion.Euler(0, yRot, 0);
+                            _roomObj.name = $"({i},{j},{yRot})";
+                            roomObjects.Add(_roomObj);
                         }
-                        else if(cellValue == 4 || cellValue == 5 || cellValue == 6 || cellValue == 8)
-                        {
-                            yRot = j == 1 ? 0 : j == size - 2 ? 180 : i == 1 ? 270 : i == size - 2 ? 90 : 0;
-                        }
-                        _roomObj.transform.rotation = Quaternion.Euler(0, yRot, 0);
-                        _roomObj.name = $"({i},{j},{yRot})";
-                        roomObjects.Add(_roomObj);
                     }
                 }
+
+                yield return null;
             }
+            
         }
 
         /// <summary>

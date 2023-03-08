@@ -27,9 +27,7 @@ namespace DungeonGeneration
         // Update is called once per frame
         void Update()
         {
-            // Releases the cursor
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            
         }
 
         public void CheckForServerConnection()
