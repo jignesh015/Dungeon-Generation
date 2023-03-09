@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 namespace DungeonGeneration
 {
     public class UIHandler : MonoBehaviour
     {
+        [Header("VIRTUAL CAMERAS")]
+        [SerializeField] private CinemachineVirtualCamera levelTopDownVC;
+        [SerializeField] private CinemachineVirtualCamera levelRotateVC;
+        [SerializeField] private CinemachineVirtualCamera firstPersonVC;
+
         [Header("SCREENS")]
         [SerializeField] private GameObject networkErrorScreen;
         [SerializeField] private GameObject configScreen;
+        [SerializeField] private GameObject exploreScreen;
 
         [Header("CONFIG SETTINGS")]
         [SerializeField] private TMP_Dropdown dungeonDatasetChoiceInput;
         [SerializeField] private TMP_Dropdown roomDatasetChoiceInput;
         [SerializeField] private Toggle performSanityCheckInput;
+        [SerializeField] private Button generateButton;
 
         [Header("CURSOR SETTINGS")]
         [SerializeField] private Texture2D cursorTexture;
@@ -37,18 +45,65 @@ namespace DungeonGeneration
             // Releases the cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            generateButton.interactable = !gameManager.levelBuilder.isBuildingLevel;
         }
 
         public void ToggleNetworkErrorScreen(bool state)
         {
             networkErrorScreen.SetActive(state);
             configScreen.SetActive(!state);
+            exploreScreen.SetActive(false);
+        }
+
+        /// <summary>
+        /// Sets the camera view as per the given index
+        /// | 0 = Top Down | 1 = Rotate | 2 = First Person
+        /// </summary>
+        /// <param name="view"></param>
+        public void SetCameraView(int view)
+        {
+            levelTopDownVC.gameObject.SetActive(false);
+            levelRotateVC.gameObject.SetActive(false);
+            firstPersonVC.gameObject.SetActive(false);
+
+            switch(view)
+            {
+                case 0:
+                    levelTopDownVC.gameObject.SetActive(true);
+                    break;
+                case 1:
+                    levelRotateVC.gameObject.SetActive(true);
+                    break;
+                case 2:
+                    firstPersonVC.gameObject.SetActive(true);
+                    break;
+                default:
+                    levelTopDownVC.gameObject.SetActive(true);
+                    break;
+            }
         }
 
         public void OnGenerateButtonClick()
         {
             SetConfigToSettings();
             gameManager.apiHandler.GenerateEntireMap(gameManager.activeSettings);
+        }
+
+        public void OnExploreButtonClick()
+        {
+            configScreen.SetActive(false);
+            exploreScreen.SetActive(true);
+
+            SetCameraView(1);
+        }
+
+        public void OnBackButtonClick()
+        {
+            configScreen.SetActive(true);
+            exploreScreen.SetActive(false);
+
+            SetCameraView(0);
         }
 
         private void SetConfigToSettings()

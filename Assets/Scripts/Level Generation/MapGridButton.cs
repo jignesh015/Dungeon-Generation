@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace DungeonGeneration
+{
+    public class MapGridButton : MonoBehaviour
+    {
+        [HideInInspector] public int index;
+        [HideInInspector] public int xIndex;
+        [HideInInspector] public int zIndex;
+
+        private Image cellImage;
+        private Color defaultColor;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            cellImage= GetComponent<Image>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+        
+        }
+
+        public void SetDefaultCellColor(Color color)
+        {
+            defaultColor = color;
+            SetColor(color);
+        }
+
+        public void ResetToDefault()
+        {
+            SetColor(defaultColor);
+        }
+
+        public void SetActiveCellColor(Color color)
+        {
+            SetColor(color);
+        }
+
+        private void SetColor(Color color)
+        {
+            if(cellImage == null) 
+            {
+                cellImage = GetComponent<Image>();
+            }
+            cellImage.color = color;
+        }
+
+        public void SetIndices(int _index, int _x, int _z)
+        {
+            index = _index;
+            xIndex = _x;
+            zIndex = _z;
+        }
+
+        public void OnCellClick()
+        {
+            //Place player inside this particular cell/room if available
+            bool _isRoom = GameManager.Instance.PlacePlayerInRoom(index, xIndex, zIndex);
+
+            //Update the cell color if room is avaiable
+            if (_isRoom)
+                GameManager.Instance.mapsUIPlotter.UpdateInteractableHeatmapCellColor(index);
+        }
+    }
+}

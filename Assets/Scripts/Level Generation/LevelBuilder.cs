@@ -7,6 +7,8 @@ namespace DungeonGeneration
 {
     public class LevelBuilder : MonoBehaviour
     {
+        [HideInInspector] public bool isBuildingLevel;
+
         [Header("LEVEL GENERATION SETTINGS")]
         [SerializeField] private List<LevelGenerationSettings> settings;
 
@@ -23,7 +25,7 @@ namespace DungeonGeneration
         [SerializeField] private float roomZPosOffset = -1f;
 
         //Dungeon references
-        private List<GameObject> dungeonFloors;
+        [HideInInspector] public List<GameObject> dungeonRooms;
         private GameObject generatedDungeon;
 
         //Room references
@@ -56,7 +58,7 @@ namespace DungeonGeneration
             if(generatedDungeon != null)
             {
                 Destroy(generatedDungeon);
-                dungeonFloors = null;
+                dungeonRooms = null;
                 yield return null;
             }
             if (roomObjects != null && roomObjects.Count > 0)
@@ -68,9 +70,14 @@ namespace DungeonGeneration
                 yield return null;
             }
 
+            isBuildingLevel = true;
+
+            //Set camera view  to top-down
+            gameManager.uiHandler.SetCameraView(0);
+
             //Instantiate the 64-grid dungeon
             generatedDungeon = Instantiate(dungeonPrefab);
-            dungeonFloors = GetAllChild(generatedDungeon);
+            dungeonRooms = GetAllChild(generatedDungeon);
 
             List<List<int>> gridValues = grid.gridList[0];
             int size = gridValues.Count;
@@ -80,12 +87,13 @@ namespace DungeonGeneration
                 {
                     int index = i * size + j;
                     //Debug.Log($"<color=cyan>| i : {i} | j : {j} | index : {index} | Val : {gridValues[i][j]} | </color>");
-                    dungeonFloors[index].SetActive(gridValues[i][j] == 1);
+                    dungeonRooms[index].SetActive(gridValues[i][j] == 1);
+                    dungeonRooms[index].name = $"{index},{i},{j}";
                 }
             }
 
             //Remove inactive floors
-            dungeonFloors = dungeonFloors.Where(obj => obj.activeSelf).ToList();
+            dungeonRooms = dungeonRooms.Where(obj => obj.activeSelf).ToList();
         }
         #endregion
 
@@ -107,21 +115,21 @@ namespace DungeonGeneration
                 yield return null;
             }
 
-            if (generatedDungeon == null || dungeonFloors == null || dungeonFloors.Count == 0)
+            if (generatedDungeon == null || dungeonRooms == null || dungeonRooms.Count == 0)
                 yield break;
 
             //Make sure that number of dungeon rooms are equal to room data generated
-            if (dungeonFloors.Count != grid.gridList.Count)
+            if (dungeonRooms.Count != grid.gridList.Count)
             {
                 Debug.LogFormat($"<color=magenta>Mismatch in level gen!" +
-                    $"Dungeon Room : {dungeonFloors.Count}|Rooms generated : {grid.gridList.Count}</color>");
+                    $"Dungeon Room : {dungeonRooms.Count}|Rooms generated : {grid.gridList.Count}</color>");
                 yield break;
             }
 
             //Select a respective Dungeon room
             for(int _index = 0; _index < grid.gridList.Count; _index++)
             {
-                GameObject _currentDungeonFloor = dungeonFloors[_index];
+                GameObject _currentDungeonFloor = dungeonRooms[_index];
                 roomObjects = new List<GameObject>();
 
                 //Perform a sanity check on the generated room data
@@ -166,7 +174,9 @@ namespace DungeonGeneration
 
                 yield return null;
             }
-            
+
+            isBuildingLevel = false;
+
         }
 
         /// <summary>

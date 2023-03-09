@@ -104,7 +104,8 @@ namespace DungeonGeneration
                 List<List<List<int>>> dungeonRes = JsonConvert.DeserializeObject<List<List<List<int>>>>(response["data"]);
                 generatedDungeons = new DungeonGrid(dungeonRes);
                 Debug.Log($"{generatedDungeons.gridList.Count} | {generatedDungeons.gridList[0].Count} | {generatedDungeons.gridList[0][0].Count}");
-                gameManager.mapsUIPlotter.PlotDungeonHeatmap(generatedDungeons.gridList[0]);
+                gameManager.mapsUIPlotter.PlotDungeonMainHeatmap(generatedDungeons.gridList[0]);
+                gameManager.mapsUIPlotter.PlotDungeonInteractableHeatmap(generatedDungeons.gridList[0]);
                 gameManager.levelBuilder.GenerateDungeon(generatedDungeons);
 
                 //Delete the unwanted variables
