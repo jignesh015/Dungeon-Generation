@@ -21,6 +21,7 @@ namespace DungeonGeneration
         [SerializeField] private GameObject networkErrorScreen;
         [SerializeField] private GameObject configScreen;
         [SerializeField] private GameObject exploreScreen;
+        [SerializeField] private GameObject roomHeatmap;
 
         [Header("CONFIG SETTINGS")]
         [SerializeField] private TMP_Dropdown dungeonDatasetChoiceInput;
@@ -76,8 +77,9 @@ namespace DungeonGeneration
             levelTopDownVC.gameObject.SetActive(false);
             levelRotateVC.gameObject.SetActive(false);
             firstPersonVC.gameObject.SetActive(false);
+            roomHeatmap.SetActive(false);
 
-            switch(view)
+            switch (view)
             {
                 case 0:
                     levelTopDownVC.gameObject.SetActive(true);
@@ -87,6 +89,7 @@ namespace DungeonGeneration
                     break;
                 case 2:
                     firstPersonVC.gameObject.SetActive(true);
+                    roomHeatmap.SetActive(true);
                     break;
                 default:
                     levelTopDownVC.gameObject.SetActive(true);
@@ -104,6 +107,7 @@ namespace DungeonGeneration
         {
             configScreen.SetActive(false);
             exploreScreen.SetActive(true);
+            roomHeatmap.SetActive(false);
 
             SetCameraView(1);
             gameManager.mapsUIPlotter.UpdateInteractableHeatmapCellColor();

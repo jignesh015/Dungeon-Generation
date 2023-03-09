@@ -56,7 +56,6 @@ namespace DungeonGeneration
                     dungeonInteractableGrid.mapGrid[i].SetActiveCellColor(activeRoomColor);
             }
         }
-
     }
 
     [Serializable]

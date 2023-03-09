@@ -15,10 +15,13 @@ namespace DungeonGeneration
         private Image cellImage;
         private Color defaultColor;
 
+        private GameManager gameManager;
+
         // Start is called before the first frame update
         void Start()
         {
             cellImage= GetComponent<Image>();
+            gameManager = GameManager.Instance;
         }
 
         // Update is called once per frame
@@ -62,11 +65,21 @@ namespace DungeonGeneration
         public void OnCellClick()
         {
             //Place player inside this particular cell/room if available
-            bool _isRoom = GameManager.Instance.PlacePlayerInRoom(index, xIndex, zIndex);
+            bool _isRoom = gameManager.PlacePlayerInRoom(index, xIndex, zIndex);
 
-            //Update the cell color if room is avaiable
             if (_isRoom)
-                GameManager.Instance.mapsUIPlotter.UpdateInteractableHeatmapCellColor(index);
+            {
+                //Update the cell color if room is avaiable
+                gameManager.mapsUIPlotter.UpdateInteractableHeatmapCellColor(index);
+
+                //Plot the respective room heat map
+                int _roomIndex = gameManager.levelBuilder.dungeonRooms.FindIndex(r =>
+                    r.name.Equals($"{index},{xIndex},{zIndex}"));
+                Debug.Log($"<color=olive>Room index = {_roomIndex} | " +
+                    $"Generated Rooms = {gameManager.apiHandler.generatedRooms.gridList.Count}</color>");
+                gameManager.mapsUIPlotter.PlotRoomHeatmap(
+                    gameManager.apiHandler.generatedRooms.gridList[_roomIndex]);
+            }
         }
     }
 }

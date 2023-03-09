@@ -12,9 +12,9 @@ namespace DungeonGeneration
     public class APIHandler : MonoBehaviour
     {
         [SerializeField] private LevelGenerationSettings settings;
-        
-        private DungeonGrid generatedDungeons;
-        private RoomsGrid generatedRooms;
+
+        [HideInInspector] public DungeonGrid generatedDungeons;
+        [HideInInspector] public RoomsGrid generatedRooms;
 
         private GameManager gameManager;
         // Start is called before the first frame update
@@ -142,8 +142,8 @@ namespace DungeonGeneration
                 List<List<List<int>>> roomsRes = JsonConvert.DeserializeObject<List<List<List<int>>>>(response["data"]);
                 generatedRooms = new RoomsGrid(roomsRes);
                 Debug.Log($"{generatedRooms.gridList.Count} | {generatedRooms.gridList[0].Count} | {generatedRooms.gridList[0][0].Count}");
-                gameManager.mapsUIPlotter.PlotRoomHeatmap(generatedRooms.gridList[0]);
                 gameManager.levelBuilder.GenerateRooms(generatedRooms);
+                //gameManager.mapsUIPlotter.PlotRoomHeatmap(generatedRooms.gridList[0]);
 
                 //Delete the unwanted variables
                 roomsRes = null;
