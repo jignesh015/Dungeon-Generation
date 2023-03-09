@@ -14,6 +14,9 @@ namespace DungeonGeneration
         [SerializeField] private CinemachineVirtualCamera levelRotateVC;
         [SerializeField] private CinemachineVirtualCamera firstPersonVC;
 
+        [Header("VIRTUAL CAMERAS SETTINGS")]
+        [SerializeField] private float vcRotateSpeed;
+
         [Header("SCREENS")]
         [SerializeField] private GameObject networkErrorScreen;
         [SerializeField] private GameObject configScreen;
@@ -47,6 +50,13 @@ namespace DungeonGeneration
             Cursor.visible = true;
 
             generateButton.interactable = !gameManager.levelBuilder.isBuildingLevel;
+
+            //Rotate the rotateVC if active
+            if(levelRotateVC != null && levelRotateVC.gameObject.activeSelf) 
+            {
+                Transform _parent = levelRotateVC.transform.parent;
+                _parent.RotateAround(_parent.position, Vector3.up, vcRotateSpeed * Time.deltaTime);
+            }
         }
 
         public void ToggleNetworkErrorScreen(bool state)
@@ -96,6 +106,7 @@ namespace DungeonGeneration
             exploreScreen.SetActive(true);
 
             SetCameraView(1);
+            gameManager.mapsUIPlotter.UpdateInteractableHeatmapCellColor();
         }
 
         public void OnBackButtonClick()

@@ -6738,6 +6738,7 @@ MonoBehaviour:
   levelTopDownVC: {fileID: 1062505615}
   levelRotateVC: {fileID: 2045286183}
   firstPersonVC: {fileID: 1620415426}
+  vcRotateSpeed: 10
   networkErrorScreen: {fileID: 605868391}
   configScreen: {fileID: 87655542}
   exploreScreen: {fileID: 1656462599}
