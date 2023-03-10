@@ -35,9 +35,7 @@ namespace DungeonGeneration
         public int numberOfDungeons;
         public int numberOfRooms;
 
-        public int dungeonDatasetChoice;
-        public int roomDatasetChoice;
-
-        public bool performSanityCheck;
+        public bool useCorrectiveAlgoDungeon;
+        public bool useCorrectiveAlgoRooms;
     }
 }

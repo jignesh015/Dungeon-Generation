@@ -24,9 +24,10 @@ namespace DungeonGeneration
         [SerializeField] private GameObject roomHeatmap;
 
         [Header("CONFIG SETTINGS")]
-        [SerializeField] private TMP_Dropdown dungeonDatasetChoiceInput;
-        [SerializeField] private TMP_Dropdown roomDatasetChoiceInput;
-        [SerializeField] private Toggle performSanityCheckInput;
+        //[SerializeField] private TMP_Dropdown dungeonDatasetChoiceInput;
+        //[SerializeField] private TMP_Dropdown roomDatasetChoiceInput;
+        [SerializeField] private Toggle useCorrectiveAlgoDungeon;
+        [SerializeField] private Toggle useCorrectiveAlgoRooms;
         [SerializeField] private Button generateButton;
 
         [Header("CURSOR SETTINGS")]
@@ -126,9 +127,10 @@ namespace DungeonGeneration
             gameManager.activeSettings.settingsName = "New Setting";
             gameManager.activeSettings.numberOfDungeons = 1;
             gameManager.activeSettings.numberOfRooms = 1;
-            gameManager.activeSettings.dungeonDatasetChoice = dungeonDatasetChoiceInput.value;
-            gameManager.activeSettings.roomDatasetChoice = roomDatasetChoiceInput.value;
-            gameManager.activeSettings.performSanityCheck = performSanityCheckInput.isOn;
+            //gameManager.activeSettings.dungeonDatasetChoice = dungeonDatasetChoiceInput.value;
+            //gameManager.activeSettings.roomDatasetChoice = roomDatasetChoiceInput.value;
+            gameManager.activeSettings.useCorrectiveAlgoDungeon = useCorrectiveAlgoDungeon.isOn;
+            gameManager.activeSettings.useCorrectiveAlgoRooms = useCorrectiveAlgoRooms.isOn;
         }
     }
 }

@@ -126,14 +126,19 @@ namespace DungeonGeneration
                 yield break;
             }
 
+            //Check again if the dataset is empty or not
+            if (generatedDungeon == null || dungeonRooms == null || dungeonRooms.Count == 0)
+                yield break;
+
             //Select a respective Dungeon room
-            for(int _index = 0; _index < grid.gridList.Count; _index++)
+            for (int _index = 0; _index < grid.gridList.Count; _index++)
             {
                 GameObject _currentDungeonFloor = dungeonRooms[_index];
                 roomObjects = new List<GameObject>();
 
                 //Perform a sanity check on the generated room data
-                List<List<int>> gridValues = gameManager.activeSettings.performSanityCheck ? RoomSanityCheck(grid.gridList[_index]) : grid.gridList[_index];
+                //List<List<int>> gridValues = gameManager.activeSettings.useCorrectiveAlgoRooms ? RoomSanityCheck(grid.gridList[_index]) : grid.gridList[_index];
+                List<List<int>> gridValues = grid.gridList[_index];
 
                 //Instatiate objects in the selected room
                 int size = gridValues.Count;
