@@ -16,6 +16,7 @@ namespace DungeonGeneration
         [HideInInspector] public DungeonGrid generatedDungeons;
         [HideInInspector] public RoomsGrid generatedRooms;
 
+        private bool reRunLevelGenerationAPI;
         private GameManager gameManager;
         // Start is called before the first frame update
         void Start()
@@ -65,6 +66,13 @@ namespace DungeonGeneration
             //Wait to generate the dungeon data
             yield return StartCoroutine(GenerateDungeonsReq());
 
+            if(reRunLevelGenerationAPI)
+            {
+                reRunLevelGenerationAPI = false;
+                GenerateEntireMap(settings);
+                yield break;
+            }
+
             if(generatedDungeons == null || generatedDungeons.gridList?.Count == 0)
             {
                 Debug.LogFormat("<color=magenta>Couldn't fetch Dungeon data</color>");
@@ -100,17 +108,30 @@ namespace DungeonGeneration
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var response = JSON.Parse(request.downloadHandler.text);
-                Debug.Log($"{response} |");
+                //Debug.Log($"{response} |");
                 List<List<List<int>>> dungeonRes = JsonConvert.DeserializeObject<List<List<List<int>>>>(response["data"]);
-                generatedDungeons = new DungeonGrid(dungeonRes);
-                Debug.Log($"{generatedDungeons.gridList.Count} | {generatedDungeons.gridList[0].Count} | {generatedDungeons.gridList[0][0].Count}");
-                gameManager.mapsUIPlotter.PlotDungeonMainHeatmap(generatedDungeons.gridList[0]);
-                gameManager.mapsUIPlotter.PlotDungeonInteractableHeatmap(generatedDungeons.gridList[0]);
-                gameManager.levelBuilder.GenerateDungeon(generatedDungeons);
 
-                //Delete the unwanted variables
-                dungeonRes = null;
-                response = null;
+                //Check if the received dataset is valid
+                if (dungeonRes[0][0].Count == 1)
+                {
+                    //Invalid Dataset. Re-run the API call
+                    Debug.Log($"<color=red>Invalid Dataset. Re-run the API call </color>");
+                    reRunLevelGenerationAPI = true;
+                    yield break;
+                }
+                else
+                {
+                    //Valid Dataset
+                    generatedDungeons = new DungeonGrid(dungeonRes);
+                    Debug.Log($"{generatedDungeons.gridList.Count} | {generatedDungeons.gridList[0].Count} | {generatedDungeons.gridList[0][0].Count}");
+                    gameManager.mapsUIPlotter.PlotDungeonMainHeatmap(generatedDungeons.gridList[0]);
+                    gameManager.mapsUIPlotter.PlotDungeonInteractableHeatmap(generatedDungeons.gridList[0]);
+                    gameManager.levelBuilder.GenerateDungeon(generatedDungeons);
+
+                    //Delete the unwanted variables
+                    dungeonRes = null;
+                    response = null;
+                }    
             }
             else
             {
@@ -138,7 +159,7 @@ namespace DungeonGeneration
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var response = JSON.Parse(request.downloadHandler.text);
-                Debug.Log($"{response} |");
+                //Debug.Log($"{response} |");
                 List<List<List<int>>> roomsRes = JsonConvert.DeserializeObject<List<List<List<int>>>>(response["data"]);
                 generatedRooms = new RoomsGrid(roomsRes);
                 Debug.Log($"{generatedRooms.gridList.Count} | {generatedRooms.gridList[0].Count} | {generatedRooms.gridList[0][0].Count}");

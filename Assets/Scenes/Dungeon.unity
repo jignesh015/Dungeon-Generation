@@ -4239,18 +4239,8 @@ MonoBehaviour:
   - settingsName: Best
     numberOfDungeons: 1
     numberOfRooms: 0
-    useCorrectiveAlgoDungeon: 0
-    useCorrectiveAlgoRooms: 0
-  - settingsName: Random Sanity
-    numberOfDungeons: 1
-    numberOfRooms: 0
-    useCorrectiveAlgoDungeon: 0
-    useCorrectiveAlgoRooms: 0
-  - settingsName: Random Insanity
-    numberOfDungeons: 1
-    numberOfRooms: 0
-    useCorrectiveAlgoDungeon: 0
-    useCorrectiveAlgoRooms: 0
+    useCorrectiveAlgoDungeon: 1
+    useCorrectiveAlgoRooms: 1
   dungeonPrefab: {fileID: 5815915768287998043, guid: e0a29fc35e99d044ba30d9d40bee65fd,
     type: 3}
   roomPrefabs:

@@ -93,6 +93,7 @@ namespace DungeonGeneration
                     break;
                 case 1:
                     levelRotateVC.gameObject.SetActive(true);
+                    roomHeatmap.SetActive(false);
                     break;
                 case 2:
                     firstPersonVC.gameObject.SetActive(true);
@@ -122,10 +123,18 @@ namespace DungeonGeneration
 
         public void OnBackButtonClick()
         {
-            configScreen.SetActive(true);
-            exploreScreen.SetActive(false);
+            if(currentViewIndex == 1)
+            {
+                configScreen.SetActive(true);
+                exploreScreen.SetActive(false);
 
-            SetCameraView(0);
+                SetCameraView(0);
+            }
+            else if(currentViewIndex == 2)
+            {
+                SetCameraView(1);
+            }
+            
         }
 
         private void SetConfigToSettings()
