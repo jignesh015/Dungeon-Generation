@@ -56,6 +56,11 @@ namespace DungeonGeneration
                     dungeonInteractableGrid.mapGrid[i].SetActiveCellColor(activeRoomColor);
             }
         }
+
+        public List<MapGridButton> GetDungeonMapGridButtons()
+        {
+            return dungeonInteractableGrid.mapGrid;
+        }
     }
 
     [Serializable]

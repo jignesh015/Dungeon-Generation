@@ -12,12 +12,14 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public Vector2 hover;
+		public bool leftClick;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
 		[Header("Mouse Cursor Settings")]
-		public bool cursorLocked = true;
+		public bool cursorLocked = false;
 		public bool cursorInputForLook = true;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -43,10 +45,20 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnHover(InputValue value)
+		{
+			HoverInput(value.Get<Vector2>());
+        }
+
+        public void OnLeftClick(InputValue value)
+        {
+            LeftClick(value.isPressed);
+        }
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -66,12 +78,22 @@ namespace StarterAssets
 			sprint = newSprintState;
 		}
 
-		private void OnApplicationFocus(bool hasFocus)
+        public void HoverInput(Vector2 newHoverPosition)
+        {
+            hover = newHoverPosition;
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
 
-		private void SetCursorState(bool newState)
+        public void LeftClick(bool newClickState)
+        {
+            leftClick = newClickState;
+        }
+
+        private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}

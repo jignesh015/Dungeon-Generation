@@ -1,6 +1,8 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DungeonGeneration
 {
@@ -16,6 +18,7 @@ namespace DungeonGeneration
         [HideInInspector] public UIHandler uiHandler;
         [HideInInspector] public LevelBuilder levelBuilder;
         [HideInInspector] public MapsUIPlotter mapsUIPlotter;
+        [HideInInspector] public StarterAssetsInputs input;
 
         private static GameManager _instance;
         public static GameManager Instance { get { return _instance; } }
@@ -36,12 +39,18 @@ namespace DungeonGeneration
             uiHandler = FindObjectOfType<UIHandler>();
             levelBuilder = FindObjectOfType<LevelBuilder>();
             mapsUIPlotter = FindObjectOfType<MapsUIPlotter>();
+            input = FindObjectOfType<StarterAssetsInputs>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
         
+        }
+
+        private void Update()
+        {
+            
         }
 
         //Place player in the respective room as per the given parameters

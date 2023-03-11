@@ -35,6 +35,11 @@ namespace DungeonGeneration
         [SerializeField] private CursorMode cursorMode = CursorMode.Auto;
         [SerializeField] private Vector2 hotSpot = Vector2.zero;
 
+        [Header("DUNGEON MATERIALS")]
+        public Material dungeonFloorHighlightMat;
+
+        [HideInInspector] public int currentViewIndex;
+
         private GameManager gameManager;
 
         // Start is called before the first frame update
@@ -75,6 +80,7 @@ namespace DungeonGeneration
         /// <param name="view"></param>
         public void SetCameraView(int view)
         {
+            currentViewIndex = view;
             levelTopDownVC.gameObject.SetActive(false);
             levelRotateVC.gameObject.SetActive(false);
             firstPersonVC.gameObject.SetActive(false);

@@ -12,6 +12,9 @@ namespace DungeonGeneration
         [HideInInspector] public int xIndex;
         [HideInInspector] public int zIndex;
 
+        [HideInInspector] public Button gridButton;
+        [HideInInspector] public DungeonFloorCollider correspondingDungeonFloor;
+
         private Image cellImage;
         private Color defaultColor;
 
@@ -21,13 +24,14 @@ namespace DungeonGeneration
         void Start()
         {
             cellImage= GetComponent<Image>();
+            gridButton =GetComponent<Button>();
             gameManager = GameManager.Instance;
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+
         }
 
         public void SetDefaultCellColor(Color color)
@@ -60,6 +64,25 @@ namespace DungeonGeneration
             index = _index;
             xIndex = _x;
             zIndex = _z;
+        }
+
+        public void OnCellHoverEnter()
+        {
+            //Highlight the correspoding dungeon floor
+            if(correspondingDungeonFloor != null)
+            {
+                correspondingDungeonFloor.isSelected = true;
+                Debug.Log($"<color=blue>OnCellHoverEnter {correspondingDungeonFloor.name}</color>");
+            }
+        }
+
+        public void OnCellHoverExit()
+        {
+            //De-Highlight the correspoding dungeon floor
+            if (correspondingDungeonFloor != null)
+            {
+                correspondingDungeonFloor.isSelected = false;
+            }
         }
 
         public void OnCellClick()
