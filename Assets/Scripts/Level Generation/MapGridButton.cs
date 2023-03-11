@@ -36,6 +36,11 @@ namespace DungeonGeneration
 
         }
 
+        private void OnEnable()
+        {
+            isCellHighlighted = false;
+        }
+
         public void SetDefaultCellColor(Color color)
         {
             defaultColor = color;
