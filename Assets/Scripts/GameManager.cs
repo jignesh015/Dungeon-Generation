@@ -20,6 +20,8 @@ namespace DungeonGeneration
         [HideInInspector] public MapsUIPlotter mapsUIPlotter;
         [HideInInspector] public StarterAssetsInputs input;
 
+        private Vector3 currentRoomPos;
+
         private static GameManager _instance;
         public static GameManager Instance { get { return _instance; } }
 
@@ -50,7 +52,15 @@ namespace DungeonGeneration
 
         private void Update()
         {
-            
+            //Check for player cell position in 1st person view
+            if(uiHandler!= null && uiHandler.currentViewIndex == 2 && currentRoomPos != null)
+            {
+                float xPos = Mathf.RoundToInt(player.transform.position.x) + 0.5f;
+                float zPos = Mathf.RoundToInt(player.transform.position.z) + 0.5f;
+
+                List<int> indices = levelBuilder.GetGridIndicesByPosition(xPos, zPos, currentRoomPos);
+                mapsUIPlotter.HighlightPlayerPosInRoom(indices);
+            }
         }
 
         //Place player in the respective room as per the given parameters
@@ -63,11 +73,11 @@ namespace DungeonGeneration
             if (_room != null)
             {
                 //Place the player in that particular room
-                Vector3 _roomPos = _room.transform.position;
+                currentRoomPos = _room.transform.position;
                 player.SetActive(false);
-                player.transform.position = new Vector3(_roomPos.x, player.transform.position.y + 2f, _roomPos.z);
+                player.transform.position = new Vector3(currentRoomPos.x, player.transform.position.y + 2f, currentRoomPos.z);
 
-                Debug.Log($"<color=yellow>Room : {_roomPos} | Player : {player.transform.position}</color>");
+                Debug.Log($"<color=yellow>Room : {currentRoomPos} | Player : {player.transform.position}</color>");
                 player.SetActive(true);
 
                 //Change camera view to first person

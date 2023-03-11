@@ -281,5 +281,19 @@ namespace DungeonGeneration
             return children;
         }
 
+        public List<int> GetGridIndicesByPosition(float xPos, float zPos, Vector3 parentPos)
+        {
+            int _xIndex = (int)((xPos - roomXPosStart - parentPos.x) / roomXPosOffset);
+            int _zIndex = (int)((zPos - roomZPosStart - parentPos.z) / roomZPosOffset);
+
+            int size = (int)Mathf.Sqrt(gameManager.mapsUIPlotter.GetRoomMapGridButtons().Count);
+
+            _xIndex = Mathf.Clamp(_xIndex,1, size - 2);
+            _zIndex = Mathf.Clamp(_zIndex, 1, size - 2);
+
+            List<int> indices = new List<int> { _xIndex, _zIndex };
+            return indices;
+        }
+
     }
 }

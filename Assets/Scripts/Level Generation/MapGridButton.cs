@@ -20,6 +20,8 @@ namespace DungeonGeneration
 
         private GameManager gameManager;
 
+        private bool isCellHighlighted = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -48,6 +50,23 @@ namespace DungeonGeneration
         public void SetActiveCellColor(Color color)
         {
             SetColor(color);
+        }
+
+        public void HighlightCell(Color color)
+        {
+            if(!isCellHighlighted)
+                StartCoroutine(HighlightCellAsync(color));
+        }
+
+        private IEnumerator HighlightCellAsync(Color color)
+        {
+            float _blinkDelay = 0.25f;
+            isCellHighlighted = true;
+            SetColor(color);
+            yield return new WaitForSeconds(_blinkDelay);
+            ResetToDefault();
+            yield return new WaitForSeconds(_blinkDelay);
+            isCellHighlighted = false;
         }
 
         private void SetColor(Color color)

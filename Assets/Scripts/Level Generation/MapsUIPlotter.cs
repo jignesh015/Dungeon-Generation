@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,6 +46,22 @@ namespace DungeonGeneration
             roomGrid.SetGridColor(gridValues, roomColors);
         }
 
+        public void HighlightPlayerPosInRoom(List<int> cellIndices)
+        {
+            int size = (int)Mathf.Sqrt(roomGrid.mapGrid.Count);
+            int index = cellIndices[0] * size + cellIndices[1];
+            MapGridButton _cellToHighlight = roomGrid.mapGrid[index];
+            _cellToHighlight.HighlightCell(Color.white);
+
+            //Reset all other rooms map grid to default color
+            foreach (MapGridButton mgb in roomGrid.mapGrid)
+            {
+                if(mgb != _cellToHighlight)
+                    mgb.ResetToDefault();
+            }
+
+        }
+
         public void UpdateInteractableHeatmapCellColor(int _activeCellIndex = -1)
         {
             for(int i = 0; i < dungeonInteractableGrid.mapGrid.Count; i++)
@@ -60,6 +75,11 @@ namespace DungeonGeneration
         public List<MapGridButton> GetDungeonMapGridButtons()
         {
             return dungeonInteractableGrid.mapGrid;
+        }
+
+        public List<MapGridButton> GetRoomMapGridButtons()
+        {
+            return roomGrid.mapGrid;
         }
     }
 
