@@ -100,6 +100,7 @@ namespace DungeonGeneration
             string url = Data.APP_URL + Data.GENERATE_DUNGEONS;
             WWWForm form = new WWWForm();
             form.AddField("num_of_samples", settings.numberOfDungeons);
+            form.AddField("model_choice", settings.dungeonModelChoice);
             form.AddField("use_corrective_algorithm", settings.useCorrectiveAlgoDungeon ? 1 : 0);
 
             UnityWebRequest request = UnityWebRequest.Post(url, form);
@@ -151,6 +152,7 @@ namespace DungeonGeneration
             string url = Data.APP_URL + Data.GENERATE_ROOMS;
             WWWForm form = new WWWForm();
             form.AddField("num_of_samples", settings.numberOfRooms);
+            form.AddField("model_choice", settings.roomModelChoice);
             form.AddField("use_corrective_algorithm", settings.useCorrectiveAlgoRooms ? 1 : 0);
 
             UnityWebRequest request = UnityWebRequest.Post(url, form);

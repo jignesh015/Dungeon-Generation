@@ -35,6 +35,9 @@ namespace DungeonGeneration
         public int numberOfDungeons;
         public int numberOfRooms;
 
+        public int dungeonModelChoice;
+        public int roomModelChoice;
+
         public bool useCorrectiveAlgoDungeon;
         public bool useCorrectiveAlgoRooms;
     }

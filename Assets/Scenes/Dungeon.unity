@@ -679,6 +679,8 @@ MonoBehaviour:
     settingsName: 
     numberOfDungeons: 0
     numberOfRooms: 0
+    dungeonModelChoice: 0
+    roomModelChoice: 0
     useCorrectiveAlgoDungeon: 0
     useCorrectiveAlgoRooms: 0
   player: {fileID: 1855101279}
@@ -1060,7 +1062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &132332381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1078,9 +1080,9 @@ RectTransform:
   m_Father: {fileID: 914225610}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &132332382
@@ -1180,9 +1182,9 @@ RectTransform:
   m_Father: {fileID: 132332381}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117.5, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134964275
@@ -1205,7 +1207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dungeon Sample
+  m_text: Dungeon Model
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 396ab00543d232442a26e17301e9593c, type: 2}
   m_sharedMaterial: {fileID: -1515170376588670724, guid: 396ab00543d232442a26e17301e9593c,
@@ -1551,7 +1553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Random Noise
+  m_text: DCGAN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 396ab00543d232442a26e17301e9593c, type: 2}
   m_sharedMaterial: {fileID: -1515170376588670724, guid: 396ab00543d232442a26e17301e9593c,
@@ -2306,9 +2308,9 @@ RectTransform:
   m_Father: {fileID: 401496060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117.5, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341999415
@@ -2333,7 +2335,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Rooms
 
-    Sample'
+    Model'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 396ab00543d232442a26e17301e9593c, type: 2}
   m_sharedMaterial: {fileID: -1515170376588670724, guid: 396ab00543d232442a26e17301e9593c,
@@ -2501,7 +2503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &401496060
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2519,9 +2521,9 @@ RectTransform:
   m_Father: {fileID: 914225610}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -155}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401496061
@@ -4008,6 +4010,8 @@ MonoBehaviour:
     settingsName: 
     numberOfDungeons: 0
     numberOfRooms: 0
+    dungeonModelChoice: 0
+    roomModelChoice: 0
     useCorrectiveAlgoDungeon: 0
     useCorrectiveAlgoRooms: 0
 --- !u!1001 &798910300
@@ -4239,6 +4243,8 @@ MonoBehaviour:
   - settingsName: Best
     numberOfDungeons: 1
     numberOfRooms: 0
+    dungeonModelChoice: 0
+    roomModelChoice: 0
     useCorrectiveAlgoDungeon: 1
     useCorrectiveAlgoRooms: 1
   dungeonPrefab: {fileID: 5815915768287998043, guid: e0a29fc35e99d044ba30d9d40bee65fd,
@@ -5523,9 +5529,9 @@ RectTransform:
   m_Father: {fileID: 401496060}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 357.5, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &984878718
@@ -5578,9 +5584,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Random Noise
+    - m_Text: DCGAN
       m_Image: {fileID: 0}
-    - m_Text: From Dataset
+    - m_Text: CNN
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6034,7 +6040,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Random Noise
+  m_text: DCGAN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 396ab00543d232442a26e17301e9593c, type: 2}
   m_sharedMaterial: {fileID: -1515170376588670724, guid: 396ab00543d232442a26e17301e9593c,
@@ -6689,6 +6695,8 @@ MonoBehaviour:
   configScreen: {fileID: 87655542}
   exploreScreen: {fileID: 1656462599}
   roomHeatmap: {fileID: 81333993}
+  dungeonModelChoiceInput: {fileID: 1773459421}
+  roomModelChoiceInput: {fileID: 984878718}
   useCorrectiveAlgoDungeon: {fileID: 77053293}
   useCorrectiveAlgoRooms: {fileID: 1806294252}
   generateButton: {fileID: 208210679}
@@ -23485,9 +23493,9 @@ RectTransform:
   m_Father: {fileID: 132332381}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 357.5, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773459421
@@ -23540,9 +23548,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Random Noise
+    - m_Text: DCGAN
       m_Image: {fileID: 0}
-    - m_Text: From Dataset
+    - m_Text: Autoencoder
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

@@ -96,7 +96,6 @@ namespace DungeonGeneration
             if(correspondingDungeonFloor != null)
             {
                 correspondingDungeonFloor.isSelected = true;
-                Debug.Log($"<color=blue>OnCellHoverEnter {correspondingDungeonFloor.name}</color>");
             }
         }
 
