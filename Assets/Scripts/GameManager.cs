@@ -76,8 +76,6 @@ namespace DungeonGeneration
                 currentRoomPos = _room.transform.position;
                 player.SetActive(false);
                 player.transform.position = new Vector3(currentRoomPos.x, player.transform.position.y + 2f, currentRoomPos.z);
-
-                Debug.Log($"<color=yellow>Room : {currentRoomPos} | Player : {player.transform.position}</color>");
                 player.SetActive(true);
 
                 //Change camera view to first person

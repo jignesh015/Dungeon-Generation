@@ -136,8 +136,6 @@ namespace DungeonGeneration
                 GameObject _currentDungeonFloor = dungeonRooms[_index];
                 roomObjects = new List<GameObject>();
 
-                //Perform a sanity check on the generated room data
-                //List<List<int>> gridValues = gameManager.activeSettings.useCorrectiveAlgoRooms ? RoomSanityCheck(grid.gridList[_index]) : grid.gridList[_index];
                 List<List<int>> gridValues = grid.gridList[_index];
 
                 //Instatiate objects in the selected room
@@ -162,6 +160,12 @@ namespace DungeonGeneration
 
                             //Set object rotation
                             float yRot = 0;
+                            List<float> _rotations = new List<float>() { 0, 90, 180, 270 };
+                            if(cellValue == 1)
+                            {
+                                int randomIndex = Random.Range(0, _rotations.Count);
+                                yRot = _rotations[randomIndex];
+                            }
                             if (cellValue == 7)
                             {
                                 yRot = j == 0 ? 0 : j == size - 1 ? 180 : i == 0 ? 270 : i == size - 1 ? 90 : 0;

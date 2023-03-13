@@ -121,8 +121,6 @@ namespace DungeonGeneration
                 //Plot the respective room heat map
                 int _roomIndex = gameManager.levelBuilder.dungeonRooms.FindIndex(r =>
                     r.name.Equals($"{index},{xIndex},{zIndex}"));
-                Debug.Log($"<color=olive>Room index = {_roomIndex} | " +
-                    $"Generated Rooms = {gameManager.apiHandler.generatedRooms.gridList.Count}</color>");
                 gameManager.mapsUIPlotter.PlotRoomHeatmap(
                     gameManager.apiHandler.generatedRooms.gridList[_roomIndex]);
             }

@@ -58,7 +58,6 @@ namespace DungeonGeneration
 
                         if (gameManager.input.leftClick)
                         {
-                            Debug.Log($"<color=blue>Left Clicked!!!</color>");
                             gameManager.input.leftClick = false;
                             correspondingMapGridButton.OnCellClick();
                         }
