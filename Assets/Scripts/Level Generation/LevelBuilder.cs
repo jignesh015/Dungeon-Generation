@@ -17,6 +17,7 @@ namespace DungeonGeneration
 
         [Header("ROOM PREFABS")]
         [SerializeField] private List<GameObject> roomPrefabs;
+        public GameObject roof;
 
         [Header("ROOM PREFABS PLACEMENT SETTINGS")]
         [SerializeField] private float roomXPosStart = -7.5f;
@@ -298,6 +299,5 @@ namespace DungeonGeneration
             List<int> indices = new List<int> { _xIndex, _zIndex };
             return indices;
         }
-
     }
 }

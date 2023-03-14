@@ -85,19 +85,24 @@ namespace DungeonGeneration
             levelRotateVC.gameObject.SetActive(false);
             firstPersonVC.gameObject.SetActive(false);
             roomHeatmap.SetActive(false);
+            gameManager.levelBuilder.roof.SetActive(false);
 
             switch (view)
             {
                 case 0:
+                    //Top down view
                     levelTopDownVC.gameObject.SetActive(true);
                     break;
                 case 1:
+                    //Iso metric (Rotate) view
                     levelRotateVC.gameObject.SetActive(true);
                     roomHeatmap.SetActive(false);
                     break;
                 case 2:
+                    //First person view
                     firstPersonVC.gameObject.SetActive(true);
                     roomHeatmap.SetActive(true);
+                    gameManager.levelBuilder.roof.SetActive(true);
                     break;
                 default:
                     levelTopDownVC.gameObject.SetActive(true);

@@ -81,6 +81,11 @@ namespace DungeonGeneration
                 //Change camera view to first person
                 uiHandler.SetCameraView(2);
 
+                //Place roof over the current room
+                Transform _roof = levelBuilder.roof.transform;
+                _roof.position = new Vector3(currentRoomPos.x,
+                    _roof.position.y, currentRoomPos.z);
+
                 return true;
             }
             else
