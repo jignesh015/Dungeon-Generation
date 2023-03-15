@@ -91,5 +91,10 @@ namespace DungeonGeneration
             else
                 return false;
         }
+
+        public void QuitApplication()
+        {
+            Application.Quit();
+        }
     }
 }
